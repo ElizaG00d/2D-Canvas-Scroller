@@ -12,17 +12,6 @@ let obCount = frameCount;
 //collection to hold randomly generated x coordinates
 const obXCoors = [];
 
-//obstacles for each frame
-const nextFrame = () => {
-    //increase lv count
-    frameCount++;
-    for (let i = 0; i < obCount; i++) {
-        //generate x coordinate for top corner start of each triangle
-        obXCoor = Math.floor(Math.random() * (1165 - 140 + 1) + 140);
-        obXCoors.push(obXCoor);
-    }
-}
-
 //rep player in game
 //stored as an object
 const square = {
@@ -34,6 +23,17 @@ const square = {
     y: 0,
     yVelocity: 0
 };
+
+//obstacles for each frame
+const nextFrame = () => {
+    //increase lv count
+    frameCount++;
+    for (let i = 0; i < obCount; i++) {
+        //generate x coordinate for top corner start of each triangle
+        obXCoor = Math.floor(Math.random() * (1165 - 140 + 1) + 140);
+        obXCoors.push(obXCoor);
+    }
+}
 
 //player's controller
 //which keys are being pressed to determine action with canvas
@@ -56,13 +56,7 @@ const controller = {
             controller.right = key_state;
             break;
         }
-    },
-
-    //event listeners
-    window.addEventListener("keydown", controller.keyListener),
-    window.addEventListener("keyup", controller.keyListener);
-
-    window.requestAnimationFrame(loop);
+    }
 };
 
 //loop animation
@@ -95,6 +89,7 @@ const loop = () => {
         square.x = 1220;
     } else if (square.x > 1220) { //if square goes off to right
         square.x = -20;
+        nextFrame();
     }
 
     //backdrop for each frame
@@ -105,6 +100,28 @@ const loop = () => {
     context.beginPath();
     context.rect(square.x, square.y, square.width, square.height);
     context.fill();
+
+    //obstacle for each frame
+    //set standard obstacle height
+    const height = 200 * Math.cos(Math.PI / 6);
+    context.fillStyle = "#FBF5F3"; //hex for triangle color
+    obXCoors.forEach((obXCoor) => {
+        context.beginPath();
+        // (x = random, y = coor. on "ground")
+        context.moveTo(obXCoor, 385);
+
+        //(x = ^random + 20, y = coor. on "ground")
+        context.lineTo(obXCoor + 20, 385);
+
+        //(x = ^random + 10, y = peak of triangle)
+        context.lineTo(obXCoor + 10, 510 - height);
+
+        context.closePath();
+
+        context.fill();
+
+    });
+
     //ground for frames
     context.strokeStyle = "#2E2532";
     context.lineWidth = 30;
@@ -115,4 +132,10 @@ const loop = () => {
 
     //updates to tell browser its ready to draw again
     window.requestAnimationFrame(loop);
-}
+};
+
+ //event listeners
+ window.addEventListener("keydown", controller.keyListener)
+ window.addEventListener("keyup", controller.keyListener);
+
+ window.requestAnimationFrame(loop);
