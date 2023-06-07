@@ -7,6 +7,7 @@
 ## Uses
 - HTML Canvas
 - JavaScript implementation for controller and canvas
+- obstacle coordinates are randomly calculated
 
 ## Additions
 - Create collision detection
