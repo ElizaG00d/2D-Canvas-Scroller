@@ -1,0 +1,11 @@
+edits to the game
+- change square into something else
+(possibly for implementation of the carnitaur)
+-connect animation of carnitaur to the object tied to the "square's" actions
+- so, would have to create an object for the carnitaur animation
+	(store carnitaur animation somewhere)
+- probably add event listeners for "game start"
+	(when player starts game carnitaur starts running)
+	(different animation for dino jump)
+	(need to tie to keystrokes)
+	(keyup and keydown stuff)
