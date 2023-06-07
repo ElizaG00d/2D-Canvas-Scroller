@@ -3,6 +3,26 @@ const context = document.querySelector("canvas").getContext('2d');
 context.canvas.height = 400;
 context.canvas.width = 1220;
 
+//frame count at 1/ lv 1
+let frameCount = 1;
+
+//set obstacle number to match lv numb
+let obCount = frameCount;
+
+//collection to hold randomly generated x coordinates
+const obXCoors = [];
+
+//obstacles for each frame
+const nextFrame = () => {
+    //increase lv count
+    frameCount++;
+    for (let i = 0; i < obCount; i++) {
+        //generate x coordinate for top corner start of each triangle
+        obXCoor = Math.floor(Math.random() * (1165 - 140 + 1) + 140);
+        obXCoors.push(obXCoor);
+    }
+}
+
 //rep player in game
 //stored as an object
 const square = {
